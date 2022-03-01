@@ -10,7 +10,8 @@
   ],
   "node-red": {
     "nodes": {
-      "wechat": "wechat/wechat.js"
+      "wechat": "wechat/wechat.js",
+      "gps": "gps/gps.js"
     }
   },
   "scripts": {
