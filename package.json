@@ -6,6 +6,7 @@
   "keywords": [
     "node-red",
     "wechat",
+    "gps",
     "home-assistant"
   ],
   "node-red": {
