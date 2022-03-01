@@ -14,7 +14,7 @@ module.exports = function (RED) {
             const list = []
             server.subscribe(topic, { qos: 0 }, async function (mtopic, mpayload, mpacket) {
                 const payload = mpayload.toString()
-                console.log(payload)
+                // console.log(payload)
                 try {
                     const message = CryptoUtil.decrypt(payload, uid)
                     const { message_id, time, content } = JSON.parse(message)
@@ -33,7 +33,7 @@ module.exports = function (RED) {
                             list.splice(index, 1)
                         })
                     }
-                    console.log('消息队列', list.length)
+                    // console.log('消息队列', list.length)
                     // 加入消息队列
                     list.push({ message_id, time })
 
@@ -42,7 +42,7 @@ module.exports = function (RED) {
                     // 文本识别
                     const res = await ha.postApi('conversation/process', { text: content })
                     const { speech, extra_data } = res.speech.plain
-                    console.log(speech)
+                    // console.log(speech)
                     // 返回结果
                     let result = speech
                     // 额外信息
@@ -69,7 +69,7 @@ module.exports = function (RED) {
                                         ]
                                     }
                                 }
-                                console.log(entity_id)
+                                // console.log(entity_id)
                             }
                         }
                     }

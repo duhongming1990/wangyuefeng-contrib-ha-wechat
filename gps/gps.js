@@ -29,16 +29,14 @@ module.exports = function (RED) {
                             let latField = 'Latitude' in attributes ? 'Latitude' : 'latitude'
                             let lntField = 'Longitude' in attributes ? 'Longitude' : 'longitude'
                             // 相同则不更新
-                            if (attributes[latField] == message.Lat && attributes[lntField] == message.Lnt) {
-                                node.send({ payload: message })
-                                return
+                            if (attributes[latField] != message.Lat || attributes[lntField] != message.Lnt) {
+                                attributes[latField] = message.Lat
+                                attributes[lntField] = message.Lnt
+                                await ha.postApi(updateUserApi, { state, attributes })
                             }
-                            attributes[latField] = message.Lat
-                            attributes[lntField] = message.Lnt
-                            await ha.postApi(updateUserApi, { state, attributes })
                             // 读取历史记录
                             const today = new Date()
-                            const diffTime = 1
+                            const diffTime = 2
                             today.setHours(today.getHours() - diffTime)
                             const startTime = today.toISOString()
                             today.setHours(today.getHours() + diffTime)
