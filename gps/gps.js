@@ -32,6 +32,21 @@ module.exports = function (RED) {
                             if (attributes[latField] != message.Lat || attributes[lntField] != message.Lnt) {
                                 attributes[latField] = message.Lat
                                 attributes[lntField] = message.Lnt
+                                // 更新状态
+                                let stateResult = await ha.postApi('template', { template: `{% set person = '${hassUser}' %}
+                                {% set lately = closest(person, states.zone) %}
+                                {%- if lately is not none and distance(person, lately.entity_id) * 1000 < state_attr(lately.entity_id, 'radius') -%}
+                                    {%- if lately.entity_id == 'zone.home' -%}
+                                        home
+                                    {%- else -%}
+                                        {{ lately.name }}
+                                    {%- endif -%}
+                                {%- else -%}
+                                    not_home
+                                {%- endif -%}` })
+                                if(stateResult.trim()){
+                                    state = stateResult.trim()
+                                }
                                 await ha.postApi(updateUserApi, { state, attributes })
                             }
                             // 读取历史记录
