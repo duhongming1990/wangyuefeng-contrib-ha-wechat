@@ -10,11 +10,15 @@
     "home-assistant"
   ],
   "node-red": {
+    "version": ">=1.3.7",
     "nodes": {
       "wechat": "wechat/wechat.js",
       "push": "push/push.js",
       "gps": "gps/gps.js"
     }
+  },
+  "engines": {
+    "node": ">=12"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
