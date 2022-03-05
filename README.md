@@ -57,6 +57,10 @@ MQTT端口：1883
 ### 1.0.0
 - 支持微信消息桥接
 
+--- 
+
+## HomeAssistant配置
+
 wechat.yaml
 ```yaml
 input_text:
