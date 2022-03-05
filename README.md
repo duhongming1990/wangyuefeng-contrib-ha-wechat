@@ -38,6 +38,9 @@ MQTT端口：1883
 
 ## 更新日志
 
+### 1.0.5
+- 修复微信推送解码问题
+- 增加HomeAssistant配置文件
 ### 1.0.4
 - 新增微信推送节点
 
@@ -54,10 +57,40 @@ MQTT端口：1883
 ### 1.0.0
 - 支持微信消息桥接
 
+wechat.yaml
+```yaml
+input_text:
+  wechat_push:
+    name: 微信推送
+    initial: ''
+
+automation:
+- id: '1646381319694'
+  alias: 微信推送
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_text.wechat_push
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      topic: wechat_push
+      payload: '{{trigger.to_state.state}}'
+  mode: single
+```
+```yaml
+service: input_text.set_value
+data:
+  entity_id: input_text.wechat_push
+  value: >-
+    【{{now().strftime('%H:%M:%S')}}】这里是要推送的消息
+```
+
 ## 如果这个项目对你有帮助，请我喝杯<del style="font-size: 14px;">咖啡</del>奶茶吧😘
 |  |支付宝|微信|
 |---|---|---|
 奶茶= | <img src="https://cdn.jsdelivr.net/gh/shaonianzhentan/ha-docs@master/docs/img/alipay.png" align="left" height="160" width="160" alt="支付宝" title="支付宝">  |  <img src="https://cdn.jsdelivr.net/gh/shaonianzhentan/ha-docs@master/docs/img/wechat.png" height="160" width="160" alt="微信支付" title="微信">
 
 ## 关注我的微信订阅号，了解更多HomeAssistant相关知识
-<img src="https://cdn.jsdelivr.net/gh/shaonianzhentan/ha-docs@master/docs/img/wechat-channel.png" height="160" alt="HomeAssistant家庭助理" title="HomeAssistant家庭助理"> 
+<img src="https://cdn.jsdelivr.net/gh/shaonianzhentan/ha-docs@master/docs/img/wechat-channel.png" height="160" alt="HomeAssistant家庭助理" title="HomeAssistant家庭助理">

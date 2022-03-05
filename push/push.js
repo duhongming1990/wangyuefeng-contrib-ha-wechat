@@ -24,7 +24,7 @@ module.exports = function (RED) {
                     }
                 })
                 const key = uid + new Date().toISOString().substring(0, 10)
-                server.client.publish(`shaonianzhentan/ha_push/${topic_key}`, CryptoUtil.pyEncrypt(result, key), qos = 0)
+                server.client.publish(`shaonianzhentan/ha_push/${topic_key}`, CryptoUtil.encrypt(result, key), qos = 0)
                 node.status({ fill: "green", shape: "ring", text: `${new Date().toLocaleString()} 消息发送成功` });
             })
         } else {
