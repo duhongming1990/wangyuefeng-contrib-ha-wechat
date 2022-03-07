@@ -98,3 +98,6 @@ data:
 
 ## 关注我的微信订阅号，了解更多HomeAssistant相关知识
 <img src="https://cdn.jsdelivr.net/gh/shaonianzhentan/ha-docs@master/docs/img/wechat-channel.png" height="160" alt="HomeAssistant家庭助理" title="HomeAssistant家庭助理">
+
+---
+**在使用的过程之中，如果遇到无法解决的问题，付费咨询请加Q`635147515`**
