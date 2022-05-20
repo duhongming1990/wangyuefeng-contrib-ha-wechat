@@ -5,19 +5,19 @@ module.exports = function (RED) {
     RED.nodes.registerType('ha-wechat', function (config) {
         RED.nodes.createNode(this, config);
         const node = this
-        const { hassUrl, hassToken, topic, uid } = config
+        const { hassUrl, hassToken, aesKey } = config
         const server = RED.nodes.getNode(config.server);
-        if (server && hassUrl && hassToken && topic && uid) {
+        if (server && hassUrl && hassToken && aesKey) {
             server.register(this)
             const ha = new HomeAssistant({ hassUrl, hassToken })
             // 消息临时存储
             const list = []
-            server.subscribe(topic, { qos: 0 }, async function (mtopic, mpayload, mpacket) {
+            server.subscribe("wangyuefeng/homeassistant/set", { qos: 0 }, async function (mtopic, mpayload, mpacket) {
                 const payload = mpayload.toString()
-                // console.log(payload)
+                console.log(payload)
                 try {
-                    const message = CryptoUtil.decrypt(payload, uid)
-                    const { message_id, time, content } = JSON.parse(message)
+                    const message = CryptoUtil.decrypt(payload, aesKey)
+                    const { message_id, time, content, uid } = JSON.parse(message)
                     // 判断是否过期
                     const second = Math.round((Date.now() - time) / 1000)
                     if (second > 5) {
@@ -33,7 +33,7 @@ module.exports = function (RED) {
                             list.splice(index, 1)
                         })
                     }
-                    // console.log('消息队列', list.length)
+                    console.log('消息队列', list.length)
                     // 加入消息队列
                     list.push({ message_id, time })
 
@@ -42,7 +42,7 @@ module.exports = function (RED) {
                     // 文本识别
                     const res = await ha.postApi('conversation/process', { text: content })
                     const { speech, extra_data } = res.speech.plain
-                    // console.log(speech)
+                    console.log(speech)
                     // 返回结果
                     let result = speech
                     // 额外信息
@@ -69,15 +69,16 @@ module.exports = function (RED) {
                                         ]
                                     }
                                 }
-                                // console.log(entity_id)
+                                console.log(entity_id)
                             }
                         }
                     }
                     // 发送消息
-                    server.client.publish(`shaonianzhentan/homeassistant/${message_id}`, CryptoUtil.encrypt(JSON.stringify({
+                    server.client.publish(`wangyuefeng/homeassistant/status/${message_id}`, CryptoUtil.encrypt(JSON.stringify({
                         message_id,
-                        content: result
-                    }), uid))
+                        content: result,
+                        uid: uid
+                    }), aesKey))
                     node.status({ fill: "green", shape: "ring", text: "消息回复成功" });
                 } catch (ex) {
                     console.log(ex)
