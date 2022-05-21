@@ -1,7 +1,7 @@
 {
   "name": "wangyuefeng-contrib-ha-wechat",
   "version": "1.1.0",
-  "description": "使用企业微信（微信里面也可以用哦）控制Home Assistant里的智能设备",
+  "description": "使用微信控制Home Assistant里的智能设备",
   "main": "index.js",
   "keywords": [
     "node-red",

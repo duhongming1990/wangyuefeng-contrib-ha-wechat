@@ -12,13 +12,13 @@
         <input type="text" id="node-input-hassToken" placeholder="Token" />
     </div>
     <div class="form-row">
-        <label for="node-input-aesKey"> aesKey </label>
-        <input type="text" id="node-input-aesKey" placeholder="企业微信中的EncodingAESKey" />
+        <label for="node-input-aesKey"> AES密钥 </label>
+        <input type="text" id="node-input-aesKey" placeholder="自定义的AES密钥" />
     </div>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('ha-wechat', {
-        category: '企业微信助手',
+        category: '微信',
         color: '#42ae3e',
         icon: "font-awesome/fa-commenting",
         paletteLabel: '智能家居助手',
@@ -31,7 +31,7 @@
         inputs: 0,
         outputs: 1,
         label: function () {
-            return "HomeAssistant家庭助理";
+            return "智能家居助手";
         }
     });
 </script>
