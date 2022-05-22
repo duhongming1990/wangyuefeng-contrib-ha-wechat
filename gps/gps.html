@@ -1,0 +1,60 @@
+<script type="text/html" data-template-name="ha-gps">
+    <div class="form-row">
+        <label for="node-input-server"> MQTT配置</label>
+        <input type="text" id="node-input-server">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"> 订阅主题 </label>
+        <input type="text" id="node-input-topic" placeholder="请在【我的位置APP】中获取" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-uid"> 用户ID </label>
+        <input type="text" id="node-input-uid" placeholder="用户ID" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-hassUrl"> HA实例地址 </label>
+        <input type="text" id="node-input-hassUrl" placeholder="http://localhost:8123" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-hassToken"> HA长令牌 </label>
+        <input type="text" id="node-input-hassToken" placeholder="Token" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-hassUser"> HA用户实体ID </label>
+        <input type="text" id="node-input-hassUser" placeholder="entity_id" />
+    </div>
+    <div class="form-tips"><b>提醒:</b>
+        关于此功能的使用方法，详情请咨询Q635147515
+    </div>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('ha-gps', {
+        category: '家庭助理',
+        color: '#49cc90',
+        icon: "font-awesome/fa-location-arrow",
+        paletteLabel: 'GPS我的位置',
+        defaults: {
+            server: { value: "", type: "mqtt-broker", required: true },
+            topic: { value: "", required: true },
+            uid: { value: "", required: true },
+            hassUrl: { value: "", required: false },
+            hassToken: { value: "", required: false },
+            hassUser: { value: "", required: false }
+        },
+        inputs: 0,
+        outputs: 1,
+        label: function () {
+            return "我的位置" + this.hassUser;
+        }
+    });
+</script>
+<script type="text/html" data-help-name="ha-gps">
+    <p>GPS持续定位</p>
+    <h3>输出</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">Object</span></dt>
+        <dt>history <span class="property-type">Object</span></dt>
+    </dl>
+    <h3>详情</h3>
+    <p>在Android中使用APP进行位置上报，然后接入到HomeAssistant之中</p>
+ </script>

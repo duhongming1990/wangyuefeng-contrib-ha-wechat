@@ -12,34 +12,33 @@
         <input type="text" id="node-input-hassToken" placeholder="Token" />
     </div>
     <div class="form-row">
-        <label for="node-input-topic"> 订阅主题 </label>
-        <input type="text" id="node-input-topic" placeholder="请在微信公众号中获取" />
-    </div>
-    <div class="form-row">
-        <label for="node-input-uid"> 用户ID </label>
-        <input type="text" id="node-input-uid" placeholder="用户ID" />
-    </div>
-    <div class="form-tips"><b>提示:</b> 
-        使用前请先关注【HomeAssistant家庭助理】订阅号，发送<b>打开控制模式</b>获取相关信息
+        <label for="node-input-aesKey"> AES密钥 </label>
+        <input type="text" id="node-input-aesKey" placeholder="自定义的AES密钥" />
     </div>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('ha-wechat', {
-        category: '家庭助理',
+        category: '微信',
         color: '#42ae3e',
         icon: "font-awesome/fa-commenting",
-        paletteLabel: '微信订阅号',
+        paletteLabel: '智能家居助手',
         defaults: {
             server: { value: "", type: "mqtt-broker", required: true },
             hassUrl: { value: "", required: true },
             hassToken: { value: "", required: true },
-            topic: { value: "", required: true },
-            uid: { value: "", required: true }
+            aesKey: { value: "", required: true }
         },
         inputs: 0,
         outputs: 1,
         label: function () {
-            return "HomeAssistant家庭助理";
+            return "智能家居助手";
         }
     });
+</script>
+<script type="text/html" data-help-name="ha-wechat">
+    <p>微信控制HomeAssistant</p>
+    <h3>输出</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">Object</span></dt>
+    </dl>
 </script>
